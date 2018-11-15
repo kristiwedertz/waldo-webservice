@@ -10,7 +10,7 @@ services:
 
 before_script:
   - docker build -t waldo-test-travis .
-  - docker run waldo-test-travis
+  - docker run -d waldo-test-travis
 
 script:
   - docker ps | grep -q waldo-test-travis
