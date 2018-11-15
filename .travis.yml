@@ -1,20 +1,17 @@
 sudo: required
+
+language: php
+
+php:
+  - 7.2
+
 services:
   - docker
-script:
+
+before_script:
   - docker build -t waldo-test-travis .
   - docker run waldo-test-travis
-after_script:
-  - docker images
-before_deploy:
-  - docker login -u "$REGISTRY_USER" -p "REGISTRY_PASS"
-deploy:
-  provider: script
-  script: docker push kwedertz/waldo-test-travis
-  on:
-    branch: dev
 
-env:
-  global:
-    - REGISTRY_USER=kwedertz
-    secure: Ftsd4NsCye9ro4tUom0Arj8WuOY7hbP9jx+O1yj17SFt+Gud1Q+oc0vXVaq34ndw4JR4CwfdOInb+jLcT0Lml5KIBLSYcj5YAqeHqElE5mUTXBqEt8xsyh04LmuOY62JGobmA3MTCz/gZdrhjZYPmRcELM5B83PYa94TyfnTujvEZIYNyk94rIEKzZ8AA3tEMH3VwkhnyGkb2GZ9FNSZpbp4ir9WV8cttfIRsc8wfaWUEzt9DSNaZg6+WbkuyWx6/Vmy+5KkBz3EfdIMU5qJAUQh/fpa6ekFyEREeWfB9/lu97aQuLo2+mrnM4W2EcycIIkT+DTDN05LkNRJkboW9wf8YIivprAXKtQ1Rfj5wMozX/65WWUJ+mS4Aoy1r1lurAVGPThFRXKZbEfGxooqteQt9EimoGuc8VbFbPgPUB0WXzGc15d3QDn2jODSo01IVzpYNI6iV9fLOweJ/NQ4vZFoG8n8pW6/OeRs0gk/MKJvTVFH3UuIFGUHBQwft+dgA/Th5tSOVO0UXNO/v7UZjl5XjwczAWdg3zNvjZm7Ei4BiuSfRyXeeqQsyuyGAiOr3ifY5hqiAQqlxzaCW6yglQ7bc6FK2k29KXLqlaVLGuF9a4XHcJLBoqQkpnIuvCKl/CiAUmv77vuqB8kjQBE9LYSaLlRFckcBHRViUPhPzuM=
+script:
+  - docker ps | grep -q waldo-test-travis
+  - docker exec -it waldo-test-travis vendor/bin/phpunit
