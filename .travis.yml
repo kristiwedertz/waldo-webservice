@@ -1,16 +1,11 @@
 sudo: required
-#services:
-#- docker
-language: php
-php: 
-  - 7.2
+services:
+- docker
 before_script:
-    #- docker build -t waldo-test-travis .
-    #- docker run -d --name waldo waldo-test-travis
-- composer install
+- docker build -t waldo-test-travis .
+- docker run -d --name waldo waldo-test-travis
 script:
-    #- docker ps | grep -q waldo-test-travis
-- vendor/bin/phpunit
+- docker ps | grep -q waldo-test-travis
   #- docker exec waldo vendor/bin/phpunit
 before_install:
 - openssl aes-256-cbc -K $encrypted_e9f1308957cf_key -iv $encrypted_e9f1308957cf_iv
