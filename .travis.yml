@@ -4,7 +4,7 @@ services:
 before_script:
 - docker build -t waldo-test-travis .
 - docker run -d --name waldo waldo-test-travis
-- composer install --no-interactive
+- composer install
 script:
 - docker ps | grep -q waldo-test-travis
 - vendor/bin/phpunit
