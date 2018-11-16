@@ -6,7 +6,7 @@ before_script:
 - docker run -d --name waldo waldo-test-travis
 script:
 - docker ps | grep -q waldo-test-travis
-- docker exec -it waldo vendor/bin/phpunit
+- docker exec waldo vendor/bin/phpunit
 before_install:
 - openssl aes-256-cbc -K $encrypted_e9f1308957cf_key -iv $encrypted_e9f1308957cf_iv
   -in .env.enc -out .env -d
